@@ -1,0 +1,773 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Philongo - Learn Languages Naturally</title>
+  <meta name="description" content="Master new languages with spaced repetition, bite-sized lessons, and real-world practice. Free for Android.">
+  <meta name="theme-color" content="#4F46E5">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><text y='28' font-size='28'>🌍</text></svg>">
+  <meta property="og:title" content="Philongo - Learn Languages Naturally">
+  <meta property="og:description" content="Master new languages with spaced repetition, bite-sized lessons, and real-world practice.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://philongo.com">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --primary: #4F46E5;
+      --primary-dark: #4338CA;
+      --primary-light: #818CF8;
+      --primary-bg: #EEF2FF;
+      --accent: #10b981;
+      --text: #1f2937;
+      --text-muted: #6b7280;
+      --text-light: #9ca3af;
+      --bg: #ffffff;
+      --surface: #f8fafc;
+      --border: #e5e7eb;
+      --card-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+      --card-shadow-lg: 0 10px 40px rgba(79,70,229,0.08), 0 4px 12px rgba(0,0,0,0.04);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      color: var(--text);
+      background: var(--bg);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    /* --- NAV --- */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      background: rgba(255,255,255,0.85);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(229,231,235,0.5);
+      transition: box-shadow 0.3s;
+    }
+    nav.scrolled { box-shadow: 0 1px 12px rgba(0,0,0,0.06); }
+    .nav-inner {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 0 24px;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .logo {
+      font-size: 22px;
+      font-weight: 800;
+      color: var(--primary);
+      text-decoration: none;
+      letter-spacing: -0.5px;
+    }
+    .nav-links { display: flex; gap: 32px; align-items: center; }
+    .nav-links a {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--primary); }
+    .nav-cta {
+      background: var(--primary) !important;
+      color: #fff !important;
+      padding: 8px 20px !important;
+      border-radius: 10px !important;
+      font-weight: 600 !important;
+      transition: background 0.2s, transform 0.15s !important;
+    }
+    .nav-cta:hover { background: var(--primary-dark) !important; transform: translateY(-1px); }
+
+    /* --- HERO --- */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 120px 24px 80px;
+      background: linear-gradient(180deg, var(--primary-bg) 0%, var(--bg) 100%);
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -200px;
+      right: -200px;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(79,70,229,0.06) 0%, transparent 70%);
+      border-radius: 50%;
+    }
+    .hero::after {
+      content: '';
+      position: absolute;
+      bottom: -100px;
+      left: -100px;
+      width: 400px;
+      height: 400px;
+      background: radial-gradient(circle, rgba(16,185,129,0.05) 0%, transparent 70%);
+      border-radius: 50%;
+    }
+    .hero-inner {
+      max-width: 1120px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 64px;
+      align-items: center;
+      position: relative;
+      z-index: 1;
+    }
+    .hero-text h1 {
+      font-size: 56px;
+      font-weight: 800;
+      line-height: 1.1;
+      letter-spacing: -1.5px;
+      margin-bottom: 20px;
+    }
+    .hero-text h1 .gradient {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .hero-text p {
+      font-size: 18px;
+      color: var(--text-muted);
+      line-height: 1.7;
+      margin-bottom: 36px;
+      max-width: 480px;
+    }
+    .hero-badges { display: flex; gap: 16px; flex-wrap: wrap; }
+    .hero-badges a { transition: transform 0.2s, opacity 0.2s; }
+    .hero-badges a:hover { transform: translateY(-2px); opacity: 0.9; }
+    .hero-badges img { height: 52px; border-radius: 8px; }
+    .hero-visual {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+    }
+    .phone-mockup {
+      width: 280px;
+      height: 560px;
+      background: #0f172a;
+      border-radius: 40px;
+      border: 4px solid #334155;
+      overflow: hidden;
+      box-shadow: 0 40px 80px rgba(79,70,229,0.15), 0 16px 32px rgba(0,0,0,0.1);
+      position: relative;
+    }
+    .phone-screen {
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(180deg, #1e1b4b 0%, #312e81 50%, #1e1b4b 100%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 24px;
+      gap: 24px;
+    }
+    .phone-screen .app-name {
+      font-size: 28px;
+      font-weight: 800;
+      color: #818CF8;
+    }
+    .phone-screen .app-tagline {
+      font-size: 14px;
+      color: #94a3b8;
+      text-align: center;
+    }
+    .phone-ui-card {
+      width: 100%;
+      background: rgba(255,255,255,0.08);
+      border-radius: 16px;
+      padding: 16px;
+      border: 1px solid rgba(255,255,255,0.06);
+    }
+    .phone-ui-card .label {
+      font-size: 11px;
+      color: #818CF8;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .phone-ui-card .value {
+      font-size: 24px;
+      font-weight: 700;
+      color: #f1f5f9;
+      margin-top: 4px;
+    }
+    .phone-ui-card .bar {
+      height: 6px;
+      background: rgba(255,255,255,0.1);
+      border-radius: 3px;
+      margin-top: 12px;
+      overflow: hidden;
+    }
+    .phone-ui-card .bar-fill {
+      height: 100%;
+      width: 65%;
+      background: linear-gradient(90deg, #818CF8, #10b981);
+      border-radius: 3px;
+    }
+    .floating-badge {
+      position: absolute;
+      background: #fff;
+      border-radius: 16px;
+      padding: 12px 16px;
+      box-shadow: var(--card-shadow-lg);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 13px;
+      font-weight: 600;
+      animation: float 6s ease-in-out infinite;
+    }
+    .floating-badge.streak {
+      top: 80px;
+      right: -30px;
+      color: #d97706;
+    }
+    .floating-badge.xp {
+      bottom: 120px;
+      left: -20px;
+      color: var(--primary);
+      animation-delay: -3s;
+    }
+    .floating-badge .emoji { font-size: 20px; }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+
+    /* --- FEATURES --- */
+    .features {
+      padding: 120px 24px;
+      background: var(--bg);
+    }
+    .section-inner {
+      max-width: 1120px;
+      margin: 0 auto;
+    }
+    .section-header {
+      text-align: center;
+      margin-bottom: 64px;
+    }
+    .section-label {
+      display: inline-block;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--primary);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 12px;
+      background: var(--primary-bg);
+      padding: 6px 16px;
+      border-radius: 20px;
+    }
+    .section-header h2 {
+      font-size: 40px;
+      font-weight: 800;
+      letter-spacing: -1px;
+      line-height: 1.2;
+    }
+    .section-header p {
+      font-size: 18px;
+      color: var(--text-muted);
+      margin-top: 16px;
+      max-width: 560px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+    .feature-card {
+      background: var(--surface);
+      border-radius: 20px;
+      padding: 32px;
+      transition: transform 0.3s, box-shadow 0.3s;
+      border: 1px solid transparent;
+    }
+    .feature-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--card-shadow-lg);
+      border-color: var(--border);
+    }
+    .feature-icon {
+      width: 48px;
+      height: 48px;
+      background: var(--primary-bg);
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      margin-bottom: 20px;
+    }
+    .feature-card h3 {
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+    .feature-card p {
+      font-size: 14px;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    /* --- HOW IT WORKS --- */
+    .how-it-works {
+      padding: 120px 24px;
+      background: var(--surface);
+    }
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 48px;
+      counter-reset: step;
+    }
+    .step {
+      text-align: center;
+      counter-increment: step;
+    }
+    .step-number {
+      width: 56px;
+      height: 56px;
+      background: var(--primary);
+      color: #fff;
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      font-weight: 800;
+      margin: 0 auto 20px;
+    }
+    .step h3 {
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+    .step p {
+      font-size: 14px;
+      color: var(--text-muted);
+      max-width: 280px;
+      margin: 0 auto;
+    }
+
+    /* --- LANGUAGES --- */
+    .languages {
+      padding: 120px 24px;
+      background: var(--bg);
+    }
+    .lang-grid {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 16px;
+    }
+    .lang-chip {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--surface);
+      padding: 14px 24px;
+      border-radius: 14px;
+      font-size: 15px;
+      font-weight: 600;
+      border: 1px solid var(--border);
+      transition: transform 0.2s, border-color 0.2s;
+    }
+    .lang-chip:hover {
+      transform: translateY(-2px);
+      border-color: var(--primary-light);
+    }
+    .lang-chip .flag { font-size: 22px; }
+
+    /* --- CTA --- */
+    .cta {
+      padding: 120px 24px;
+      background: linear-gradient(135deg, #1e1b4b 0%, #312e81 50%, #1e1b4b 100%);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .cta::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 800px;
+      height: 800px;
+      background: radial-gradient(circle, rgba(129,140,248,0.12) 0%, transparent 60%);
+      border-radius: 50%;
+    }
+    .cta-inner { position: relative; z-index: 1; }
+    .cta h2 {
+      font-size: 44px;
+      font-weight: 800;
+      color: #fff;
+      letter-spacing: -1px;
+      margin-bottom: 16px;
+    }
+    .cta p {
+      font-size: 18px;
+      color: #94a3b8;
+      margin-bottom: 40px;
+      max-width: 480px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .cta .hero-badges { justify-content: center; }
+
+    /* --- FOOTER --- */
+    footer {
+      padding: 48px 24px;
+      background: #0f172a;
+      text-align: center;
+    }
+    footer .logo { color: var(--primary-light); font-size: 20px; display: block; margin-bottom: 16px; }
+    footer p {
+      font-size: 13px;
+      color: #64748b;
+    }
+    footer a {
+      color: #94a3b8;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    footer a:hover { color: var(--primary-light); }
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 24px;
+      margin-top: 16px;
+    }
+    .footer-links a { font-size: 13px; }
+
+    /* --- MOBILE --- */
+    @media (max-width: 768px) {
+      .hero-inner { grid-template-columns: 1fr; text-align: center; gap: 48px; }
+      .hero-text h1 { font-size: 36px; }
+      .hero-text p { margin-left: auto; margin-right: auto; }
+      .hero-badges { justify-content: center; }
+      .hero-visual { order: -1; }
+      .phone-mockup { width: 220px; height: 440px; }
+      .floating-badge { display: none; }
+      .features-grid { grid-template-columns: 1fr; }
+      .steps { grid-template-columns: 1fr; gap: 32px; }
+      .section-header h2 { font-size: 28px; }
+      .cta h2 { font-size: 28px; }
+      .nav-links a:not(.nav-cta) { display: none; }
+    }
+
+    /* --- ANIMATIONS --- */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+    }
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* --- LANG SWITCH --- */
+    .lang-switch {
+      display: flex;
+      background: var(--primary-bg);
+      border-radius: 8px;
+      overflow: hidden;
+      font-size: 13px;
+    }
+    .lang-switch button {
+      padding: 6px 12px;
+      border: none;
+      background: transparent;
+      color: var(--text-muted);
+      cursor: pointer;
+      font-weight: 600;
+      font-family: inherit;
+      transition: all 0.2s;
+    }
+    .lang-switch button.active {
+      background: var(--primary);
+      color: #fff;
+    }
+  </style>
+</head>
+<body>
+  <!-- NAV -->
+  <nav id="nav">
+    <div class="nav-inner">
+      <a href="#" class="logo">Philongo</a>
+      <div class="nav-links">
+        <a href="#features">Features</a>
+        <a href="#how-it-works">How it works</a>
+        <a href="#languages">Languages</a>
+        <div class="lang-switch">
+          <button class="active" onclick="setLang('en')">EN</button>
+          <button onclick="setLang('tr')">TR</button>
+        </div>
+        <a href="https://play.google.com/store/apps/details?id=com.philongo.app" class="nav-cta" data-i18n="cta_download">Get the App</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero" id="hero">
+    <div class="hero-inner">
+      <div class="hero-text fade-in">
+        <h1 data-i18n="hero_title">Learn languages <span class="gradient">naturally</span></h1>
+        <p data-i18n="hero_subtitle">Master new languages with spaced repetition, bite-sized lessons, and real-world vocabulary. Your pocket-sized language companion.</p>
+        <div class="hero-badges">
+          <a href="https://play.google.com/store/apps/details?id=com.philongo.app" aria-label="Get it on Google Play">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg" alt="Get it on Google Play" loading="lazy">
+          </a>
+        </div>
+      </div>
+      <div class="hero-visual fade-in">
+        <div class="phone-mockup">
+          <div class="phone-screen">
+            <div class="app-name">Philongo</div>
+            <div class="app-tagline">Your language learning companion</div>
+            <div class="phone-ui-card">
+              <div class="label" data-i18n="phone_label">Today's Progress</div>
+              <div class="value">3 / 5</div>
+              <div class="bar"><div class="bar-fill"></div></div>
+            </div>
+            <div class="phone-ui-card">
+              <div class="label" data-i18n="phone_streak">Current Streak</div>
+              <div class="value">12 days</div>
+            </div>
+          </div>
+        </div>
+        <div class="floating-badge streak">
+          <span class="emoji">🔥</span>
+          <span data-i18n="badge_streak">12 day streak!</span>
+        </div>
+        <div class="floating-badge xp">
+          <span class="emoji">⭐</span>
+          <span>+25 XP</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURES -->
+  <section class="features" id="features">
+    <div class="section-inner">
+      <div class="section-header fade-in">
+        <span class="section-label" data-i18n="features_label">Features</span>
+        <h2 data-i18n="features_title">Everything you need to learn a language</h2>
+        <p data-i18n="features_subtitle">Built with science-backed methods and designed for real progress.</p>
+      </div>
+      <div class="features-grid">
+        <div class="feature-card fade-in">
+          <div class="feature-icon">🧠</div>
+          <h3 data-i18n="f1_title">Spaced Repetition</h3>
+          <p data-i18n="f1_desc">SM-2 algorithm ensures you review words right before you forget them. Maximum retention, minimum effort.</p>
+        </div>
+        <div class="feature-card fade-in">
+          <div class="feature-icon">📚</div>
+          <h3 data-i18n="f2_title">Structured Lessons</h3>
+          <p data-i18n="f2_desc">A1 to C2 curriculum with grammar, vocabulary, reading, and writing. Progress at your own pace.</p>
+        </div>
+        <div class="feature-card fade-in">
+          <div class="feature-icon">🎯</div>
+          <h3 data-i18n="f3_title">Interactive Quizzes</h3>
+          <p data-i18n="f3_desc">Test your knowledge with multiple choice, fill-in-the-blank, and matching exercises after every lesson.</p>
+        </div>
+        <div class="feature-card fade-in">
+          <div class="feature-icon">📊</div>
+          <h3 data-i18n="f4_title">Track Your Progress</h3>
+          <p data-i18n="f4_desc">Daily stats, study streaks, XP system, and achievement badges keep you motivated every day.</p>
+        </div>
+        <div class="feature-card fade-in">
+          <div class="feature-icon">🔒</div>
+          <h3 data-i18n="f5_title">Works Offline</h3>
+          <p data-i18n="f5_desc">All lessons and flashcards work without internet. Learn on the subway, on a plane, anywhere.</p>
+        </div>
+        <div class="feature-card fade-in">
+          <div class="feature-icon">🌙</div>
+          <h3 data-i18n="f6_title">Dark Mode</h3>
+          <p data-i18n="f6_desc">Easy on the eyes for late-night study sessions. Automatic or manual theme switching.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section class="how-it-works" id="how-it-works">
+    <div class="section-inner">
+      <div class="section-header fade-in">
+        <span class="section-label" data-i18n="how_label">How it works</span>
+        <h2 data-i18n="how_title">Start learning in 30 seconds</h2>
+      </div>
+      <div class="steps">
+        <div class="step fade-in">
+          <div class="step-number">1</div>
+          <h3 data-i18n="step1_title">Pick your language</h3>
+          <p data-i18n="step1_desc">Choose from available language pairs and select your current level.</p>
+        </div>
+        <div class="step fade-in">
+          <div class="step-number">2</div>
+          <h3 data-i18n="step2_title">Follow the roadmap</h3>
+          <p data-i18n="step2_desc">Structured lessons guide you from beginner to advanced, step by step.</p>
+        </div>
+        <div class="step fade-in">
+          <div class="step-number">3</div>
+          <h3 data-i18n="step3_title">Practice daily</h3>
+          <p data-i18n="step3_desc">Flashcards, quizzes, and writing exercises build lasting fluency.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- LANGUAGES -->
+  <section class="languages" id="languages">
+    <div class="section-inner">
+      <div class="section-header fade-in">
+        <span class="section-label" data-i18n="lang_label">Languages</span>
+        <h2 data-i18n="lang_title">Languages you can learn</h2>
+        <p data-i18n="lang_subtitle">More languages coming soon.</p>
+      </div>
+      <div class="lang-grid fade-in">
+        <div class="lang-chip"><span class="flag">🇩🇪</span> German</div>
+        <div class="lang-chip"><span class="flag">🇬🇧</span> English</div>
+        <div class="lang-chip"><span class="flag">🇪🇸</span> Spanish</div>
+        <div class="lang-chip"><span class="flag">🇫🇷</span> French</div>
+        <div class="lang-chip"><span class="flag">🇹🇷</span> Turkish</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta">
+    <div class="section-inner cta-inner fade-in">
+      <h2 data-i18n="cta_title">Ready to start learning?</h2>
+      <p data-i18n="cta_subtitle">Download Philongo for free and begin your language journey today.</p>
+      <div class="hero-badges">
+        <a href="https://play.google.com/store/apps/details?id=com.philongo.app" aria-label="Get it on Google Play">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg" alt="Get it on Google Play" loading="lazy">
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <span class="logo">Philongo</span>
+    <p>&copy; 2026 Philongo. All rights reserved.</p>
+    <div class="footer-links">
+      <a href="mailto:support@philongo.com" data-i18n="footer_contact">Contact</a>
+    </div>
+  </footer>
+
+  <script>
+    // Scroll animation
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+    // Nav scroll effect
+    window.addEventListener('scroll', () => {
+      document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 10);
+    });
+
+    // i18n
+    const translations = {
+      en: {
+        hero_title: 'Learn languages <span class="gradient">naturally</span>',
+        hero_subtitle: 'Master new languages with spaced repetition, bite-sized lessons, and real-world vocabulary. Your pocket-sized language companion.',
+        cta_download: 'Get the App',
+        phone_label: "Today's Progress",
+        phone_streak: 'Current Streak',
+        badge_streak: '12 day streak!',
+        features_label: 'Features',
+        features_title: 'Everything you need to learn a language',
+        features_subtitle: 'Built with science-backed methods and designed for real progress.',
+        f1_title: 'Spaced Repetition', f1_desc: 'SM-2 algorithm ensures you review words right before you forget them. Maximum retention, minimum effort.',
+        f2_title: 'Structured Lessons', f2_desc: 'A1 to C2 curriculum with grammar, vocabulary, reading, and writing. Progress at your own pace.',
+        f3_title: 'Interactive Quizzes', f3_desc: 'Test your knowledge with multiple choice, fill-in-the-blank, and matching exercises after every lesson.',
+        f4_title: 'Track Your Progress', f4_desc: 'Daily stats, study streaks, XP system, and achievement badges keep you motivated every day.',
+        f5_title: 'Works Offline', f5_desc: 'All lessons and flashcards work without internet. Learn on the subway, on a plane, anywhere.',
+        f6_title: 'Dark Mode', f6_desc: 'Easy on the eyes for late-night study sessions. Automatic or manual theme switching.',
+        how_label: 'How it works', how_title: 'Start learning in 30 seconds',
+        step1_title: 'Pick your language', step1_desc: 'Choose from available language pairs and select your current level.',
+        step2_title: 'Follow the roadmap', step2_desc: 'Structured lessons guide you from beginner to advanced, step by step.',
+        step3_title: 'Practice daily', step3_desc: 'Flashcards, quizzes, and writing exercises build lasting fluency.',
+        lang_label: 'Languages', lang_title: 'Languages you can learn', lang_subtitle: 'More languages coming soon.',
+        cta_title: 'Ready to start learning?', cta_subtitle: 'Download Philongo for free and begin your language journey today.',
+        footer_contact: 'Contact',
+      },
+      tr: {
+        hero_title: 'Dilleri <span class="gradient">do\u011Fal yoldan</span> \u00F6\u011Frenin',
+        hero_subtitle: 'Aral\u0131kl\u0131 tekrar, k\u0131sa dersler ve ger\u00E7ek d\u00FCnya kelime da\u011Farc\u0131\u011F\u0131yla yeni diller \u00F6\u011Frenin. Cebinizdeki dil arkada\u015F\u0131n\u0131z.',
+        cta_download: 'Uygulamay\u0131 \u0130ndir',
+        phone_label: 'Bug\u00FCnk\u00FC \u0130lerleme',
+        phone_streak: 'Mevcut Seri',
+        badge_streak: '12 g\u00FCnl\u00FCk seri!',
+        features_label: '\u00D6zellikler',
+        features_title: 'Dil \u00F6\u011Frenmek i\u00E7in ihtiyac\u0131n\u0131z olan her \u015Fey',
+        features_subtitle: 'Bilimsel y\u00F6ntemlerle tasarland\u0131, ger\u00E7ek ilerleme i\u00E7in optimize edildi.',
+        f1_title: 'Aral\u0131kl\u0131 Tekrar', f1_desc: 'SM-2 algoritmas\u0131 kelimeleri unutmadan hemen \u00F6nce tekrarlaman\u0131z\u0131 sa\u011Flar.',
+        f2_title: 'Yap\u0131land\u0131r\u0131lm\u0131\u015F Dersler', f2_desc: 'A1\'den C2\'ye dil bilgisi, kelime, okuma ve yazma i\u00E7eren m\u00Fcfredat.',
+        f3_title: 'Etkile\u015Fimli Quizler', f3_desc: 'Her ders sonras\u0131 \u00E7oktan se\u00E7meli, bo\u015Fluk doldurma ve e\u015Fle\u015Ftirme al\u0131\u015Ft\u0131rmalar\u0131.',
+        f4_title: '\u0130lerlemenizi Takip Edin', f4_desc: 'G\u00FCnl\u00FCk istatistikler, seri takibi, XP sistemi ve ba\u015Far\u0131 rozetleri.',
+        f5_title: '\u00C7evrimd\u0131\u015F\u0131 \u00C7al\u0131\u015F\u0131r', f5_desc: 'T\u00FCm dersler ve kartlar internet olmadan \u00E7al\u0131\u015F\u0131r. Metroda, u\u00E7akta, her yerde.',
+        f6_title: 'Karanl\u0131k Mod', f6_desc: 'Gece \u00E7al\u0131\u015Fmalar\u0131 i\u00E7in g\u00F6z dostu. Otomatik veya manuel tema se\u00E7imi.',
+        how_label: 'Nas\u0131l \u00E7al\u0131\u015F\u0131r', how_title: '30 saniyede \u00F6\u011Frenmeye ba\u015Flay\u0131n',
+        step1_title: 'Dilinizi se\u00E7in', step1_desc: 'Mevcut dil \u00E7iftlerinden birini ve seviyenizi se\u00E7in.',
+        step2_title: 'Yol haritas\u0131n\u0131 takip edin', step2_desc: 'Yap\u0131land\u0131r\u0131lm\u0131\u015F dersler sizi ad\u0131m ad\u0131m ileriye ta\u015F\u0131r.',
+        step3_title: 'Her g\u00FCn pratik yap\u0131n', step3_desc: 'Kartlar, quizler ve yazma al\u0131\u015Ft\u0131rmalar\u0131yla kal\u0131c\u0131 ak\u0131c\u0131l\u0131k kazan\u0131n.',
+        lang_label: 'Diller', lang_title: '\u00D6\u011Frenebilece\u011Finiz diller', lang_subtitle: 'Daha fazla dil yak\u0131nda eklenecek.',
+        cta_title: '\u00D6\u011Frenmeye haz\u0131r m\u0131s\u0131n\u0131z?', cta_subtitle: 'Philongo\'yu \u00FCcretsiz indirin ve dil yolculu\u011Funuza bug\u00FCn ba\u015Flay\u0131n.',
+        footer_contact: '\u0130leti\u015Fim',
+      }
+    };
+
+    function setLang(lang) {
+      document.querySelectorAll('.lang-switch button').forEach(btn => {
+        btn.classList.toggle('active', btn.textContent === lang.toUpperCase());
+      });
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (translations[lang]?.[key]) {
+          el.innerHTML = translations[lang][key];
+        }
+      });
+      document.documentElement.lang = lang;
+    }
+  </script>
+</body>
+</html>
