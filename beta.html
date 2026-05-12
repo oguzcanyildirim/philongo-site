@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Philongo - Join the Beta</title>
+  <meta name="description" content="Join the Philongo beta program and get early access to the language learning app.">
+  <meta name="theme-color" content="#4F46E5">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%234F46E5'/><text x='50%25' y='72%25' font-size='18' text-anchor='middle' fill='white' font-weight='bold'>P</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --primary: #4F46E5; --primary-dark: #4338CA; --primary-light: #818CF8;
+      --primary-bg: #EEF2FF; --accent: #10b981; --accent-bg: #ecfdf5;
+      --text: #0f172a; --text-secondary: #475569; --text-muted: #94a3b8;
+      --bg: #ffffff; --surface: #f8fafc; --border: #e2e8f0;
+      --shadow-sm: 0 1px 2px rgba(0,0,0,0.04);
+      --shadow-md: 0 4px 16px rgba(0,0,0,0.06);
+      --radius: 16px;
+    }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      color: var(--text); background: var(--bg); line-height: 1.6;
+      -webkit-font-smoothing: antialiased; min-height: 100vh;
+      display: flex; flex-direction: column;
+    }
+
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      background: rgba(255,255,255,0.92); backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border); box-shadow: var(--shadow-sm);
+    }
+    .nav-inner {
+      max-width: 720px; margin: 0 auto; padding: 0 24px;
+      height: 60px; display: flex; align-items: center; justify-content: space-between;
+    }
+    .logo { font-size: 21px; font-weight: 800; color: var(--primary); text-decoration: none; letter-spacing: -0.5px; }
+    .nav-right { display: flex; align-items: center; gap: 8px; }
+    .lang-toggle {
+      display: flex; background: var(--surface); border-radius: 8px; border: 1px solid var(--border);
+      overflow: hidden; font-size: 12px;
+    }
+    .lang-toggle button {
+      padding: 5px 10px; border: none; background: transparent; color: var(--text-muted);
+      cursor: pointer; font-weight: 600; font-family: inherit; font-size: 12px; transition: all 0.2s;
+    }
+    .lang-toggle button.active { background: var(--primary); color: #fff; }
+
+    .content {
+      flex: 1; max-width: 720px; margin: 0 auto; padding: 100px 24px 60px; width: 100%;
+    }
+
+    .badge {
+      display: inline-block; font-size: 12px; font-weight: 700; color: var(--primary);
+      text-transform: uppercase; letter-spacing: 1.2px; margin-bottom: 16px;
+      background: var(--primary-bg); padding: 5px 14px; border-radius: 20px;
+    }
+
+    h1 { font-size: 36px; font-weight: 800; letter-spacing: -0.8px; line-height: 1.15; margin-bottom: 16px; }
+    .intro { font-size: 17px; color: var(--text-secondary); margin-bottom: 48px; max-width: 540px; }
+
+    .steps { display: flex; flex-direction: column; gap: 24px; margin-bottom: 48px; }
+    .step {
+      display: flex; gap: 20px; align-items: flex-start;
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 24px;
+      transition: border-color 0.2s;
+    }
+    .step:hover { border-color: var(--primary-light); }
+    .step-num {
+      width: 40px; height: 40px; border-radius: 12px; flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 16px; font-weight: 800; color: #fff; background: var(--primary);
+    }
+    .step-content h3 { font-size: 16px; font-weight: 700; margin-bottom: 4px; }
+    .step-content p { font-size: 14px; color: var(--text-secondary); line-height: 1.55; }
+    .step-content a {
+      color: var(--primary); font-weight: 600; text-decoration: none;
+      border-bottom: 1px solid transparent; transition: border-color 0.2s;
+    }
+    .step-content a:hover { border-bottom-color: var(--primary); }
+
+    .note {
+      background: #fffbeb; border: 1px solid #fde68a; border-radius: 12px;
+      padding: 16px 20px; font-size: 14px; color: #92400e; margin-bottom: 48px;
+      display: flex; gap: 12px; align-items: flex-start;
+    }
+    .note svg { width: 20px; height: 20px; flex-shrink: 0; margin-top: 1px; color: #d97706; }
+
+    .faq-section { margin-bottom: 48px; }
+    .faq-section h2 { font-size: 22px; font-weight: 800; margin-bottom: 20px; }
+    .faq-item { border-bottom: 1px solid var(--border); }
+    .faq-q {
+      width: 100%; padding: 16px 0; background: none; border: none; cursor: pointer;
+      font-family: inherit; font-size: 15px; font-weight: 600; color: var(--text);
+      text-align: left; display: flex; justify-content: space-between; align-items: center; gap: 16px;
+    }
+    .faq-q .faq-icon { width: 20px; height: 20px; flex-shrink: 0; transition: transform 0.2s; color: var(--text-muted); }
+    .faq-q[aria-expanded="true"] .faq-icon { transform: rotate(45deg); }
+    .faq-a {
+      max-height: 0; overflow: hidden; transition: max-height 0.3s ease-out;
+      font-size: 14px; color: var(--text-secondary); line-height: 1.6;
+    }
+    .faq-a.open { max-height: 200px; padding-bottom: 16px; }
+
+    footer { padding: 40px 24px; background: #0f172a; text-align: center; }
+    footer .logo { color: var(--primary-light); font-size: 18px; display: block; margin-bottom: 12px; }
+    footer p { font-size: 12px; color: #475569; }
+    footer a { color: #64748b; text-decoration: none; transition: color 0.2s; }
+    footer a:hover { color: var(--primary-light); }
+    .footer-links { display: flex; justify-content: center; gap: 20px; margin-top: 12px; flex-wrap: wrap; }
+    .footer-links a { font-size: 12px; }
+
+    @media (max-width: 768px) {
+      h1 { font-size: 28px; }
+      .step { flex-direction: column; gap: 12px; }
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="nav-inner">
+      <a href="/" class="logo">Philongo</a>
+      <div class="nav-right">
+        <div class="lang-toggle">
+          <button class="active" onclick="setLang('en')">EN</button>
+          <button onclick="setLang('tr')">TR</button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <div class="content">
+    <span class="badge" data-i18n="badge">Beta Program</span>
+    <h1 data-i18n="title">Join the Philongo Beta</h1>
+    <p class="intro" data-i18n="intro">Get early access to Philongo on Android. Help us improve the app before the public launch by testing new features and sharing your feedback.</p>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <h3 data-i18n="s1_t">Join the testers group</h3>
+          <p data-i18n="s1_d">Join our <a href="https://groups.google.com/g/philongo-testers" target="_blank" rel="noopener">Google Group</a> with your Google account. This is required by Google Play for closed beta access.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <h3 data-i18n="s2_t">Accept the beta invitation</h3>
+          <p data-i18n="s2_d">Open the <a href="https://play.google.com/apps/testing/com.philongo.app" target="_blank" rel="noopener">beta opt-in page</a> and accept the invitation. Use the same Google account you used in step 1.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <h3 data-i18n="s3_t">Download from Google Play</h3>
+          <p data-i18n="s3_d">After accepting, Philongo will appear on the <a href="https://play.google.com/store/apps/details?id=com.philongo.app" target="_blank" rel="noopener">Google Play Store</a>. Download and start learning!</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="note">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+      <span data-i18n="note">It may take a few minutes after joining the group for the beta invitation link to become active. If the Play Store page says the app is unavailable, wait a few minutes and try again.</span>
+    </div>
+
+    <div class="faq-section">
+      <h2 data-i18n="faq_title">Questions</h2>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false" data-i18n="fq1_q">
+          <span>Why do I need to join a Google Group?</span>
+          <svg class="faq-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        </button>
+        <div class="faq-a" data-i18n="fq1_a">Google Play requires beta testers to be part of a group. Your email is only used to grant you access and is not shared with anyone.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false" data-i18n="fq2_q">
+          <span>Is the beta free?</span>
+          <svg class="faq-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        </button>
+        <div class="faq-a" data-i18n="fq2_a">Yes, completely free. The full app will also be free.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false" data-i18n="fq3_q">
+          <span>How do I report a bug or give feedback?</span>
+          <svg class="faq-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        </button>
+        <div class="faq-a" data-i18n="fq3_a">Send an email to <a href="mailto:support@philongo.com">support@philongo.com</a> with a description of the issue or suggestion.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false" data-i18n="fq4_q">
+          <span>Is there an iOS beta?</span>
+          <svg class="faq-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        </button>
+        <div class="faq-a" data-i18n="fq4_a">The iOS version is currently under review on the App Store. It will be available soon.</div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <span class="logo">Philongo</span>
+    <p>&copy; 2026 Philongo. All rights reserved.</p>
+    <div class="footer-links">
+      <a href="/" data-i18n="f_home">Home</a>
+      <a href="/privacy.html" data-i18n="f_privacy">Privacy Policy</a>
+      <a href="/terms.html" data-i18n="f_terms">Terms of Service</a>
+      <a href="mailto:support@philongo.com" data-i18n="f_contact">Contact</a>
+    </div>
+  </footer>
+
+  <script>
+    document.querySelectorAll('.faq-q').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const expanded = btn.getAttribute('aria-expanded') === 'true';
+        btn.setAttribute('aria-expanded', String(!expanded));
+        btn.nextElementSibling.classList.toggle('open', !expanded);
+      });
+    });
+
+    const T={
+      en:{
+        badge:'Beta Program',
+        title:'Join the Philongo Beta',
+        intro:'Get early access to Philongo on Android. Help us improve the app before the public launch by testing new features and sharing your feedback.',
+        s1_t:'Join the testers group',
+        s1_d:'Join our <a href="https://groups.google.com/g/philongo-testers" target="_blank" rel="noopener">Google Group</a> with your Google account. This is required by Google Play for closed beta access.',
+        s2_t:'Accept the beta invitation',
+        s2_d:'Open the <a href="https://play.google.com/apps/testing/com.philongo.app" target="_blank" rel="noopener">beta opt-in page</a> and accept the invitation. Use the same Google account you used in step 1.',
+        s3_t:'Download from Google Play',
+        s3_d:'After accepting, Philongo will appear on the <a href="https://play.google.com/store/apps/details?id=com.philongo.app" target="_blank" rel="noopener">Google Play Store</a>. Download and start learning!',
+        note:'It may take a few minutes after joining the group for the beta invitation link to become active. If the Play Store page says the app is unavailable, wait a few minutes and try again.',
+        faq_title:'Questions',
+        fq1_q:'<span>Why do I need to join a Google Group?</span>',
+        fq1_a:'Google Play requires beta testers to be part of a group. Your email is only used to grant you access and is not shared with anyone.',
+        fq2_q:'<span>Is the beta free?</span>',
+        fq2_a:'Yes, completely free. The full app will also be free.',
+        fq3_q:'<span>How do I report a bug or give feedback?</span>',
+        fq3_a:'Send an email to <a href="mailto:support@philongo.com">support@philongo.com</a> with a description of the issue or suggestion.',
+        fq4_q:'<span>Is there an iOS beta?</span>',
+        fq4_a:'The iOS version is currently under review on the App Store. It will be available soon.',
+        f_home:'Home',
+        f_privacy:'Privacy Policy',
+        f_terms:'Terms of Service',
+        f_contact:'Contact'
+      },
+      tr:{
+        badge:'Beta Program\u0131',
+        title:'Philongo Beta\'ya Kat\u0131l\u0131n',
+        intro:'Android\'de Philongo\'ya erken eri\u015Fim sa\u011Flay\u0131n. Yeni \u00F6zellikleri test ederek ve geri bildirim payla\u015Farak uygulamay\u0131 herkese a\u00E7\u0131lmadan \u00F6nce geli\u015Ftirmemize yard\u0131mc\u0131 olun.',
+        s1_t:'Test grubuna kat\u0131l\u0131n',
+        s1_d:'Google hesab\u0131n\u0131zla <a href="https://groups.google.com/g/philongo-testers" target="_blank" rel="noopener">Google Grubumuza</a> kat\u0131l\u0131n. Kapal\u0131 beta eri\u015Fimi i\u00E7in Google Play bunu zorunlu tutuyor.',
+        s2_t:'Beta davetini kabul edin',
+        s2_d:'<a href="https://play.google.com/apps/testing/com.philongo.app" target="_blank" rel="noopener">Beta kat\u0131l\u0131m sayfas\u0131n\u0131</a> a\u00E7\u0131n ve daveti kabul edin. 1. ad\u0131mdaki Google hesab\u0131n\u0131 kullan\u0131n.',
+        s3_t:'Google Play\'den indirin',
+        s3_d:'Kabul ettikten sonra Philongo <a href="https://play.google.com/store/apps/details?id=com.philongo.app" target="_blank" rel="noopener">Google Play Store</a>\'da g\u00F6r\u00FCnecektir. \u0130ndirin ve \u00F6\u011Frenmeye ba\u015Flay\u0131n!',
+        note:'Gruba kat\u0131ld\u0131ktan sonra beta davet ba\u011Flant\u0131s\u0131n\u0131n aktif olmas\u0131 birka\u00E7 dakika s\u00FCrebilir. Play Store sayfas\u0131 uygulamanın kullan\u0131lamaz oldu\u011Funu s\u00F6yl\u00FCyorsa birka\u00E7 dakika bekleyip tekrar deneyin.',
+        faq_title:'Sorular',
+        fq1_q:'<span>Neden bir Google Grubuna kat\u0131lmam gerekiyor?</span>',
+        fq1_a:'Google Play, beta test kullan\u0131c\u0131lar\u0131n\u0131n bir gruba dahil olmas\u0131n\u0131 zorunlu tutuyor. E-postan\u0131z yaln\u0131zca eri\u015Fim izni i\u00E7in kullan\u0131l\u0131r ve kimseyle payla\u015F\u0131lmaz.',
+        fq2_q:'<span>Beta \u00FCcretsiz mi?</span>',
+        fq2_a:'Evet, tamamen \u00FCcretsiz. Uygulamanın tam s\u00FCr\u00FCm\u00FC de \u00FCcretsiz olacak.',
+        fq3_q:'<span>Hata bildirimi veya geri bildirim nas\u0131l yap\u0131l\u0131r?</span>',
+        fq3_a:'Sorunu veya \u00F6nerinizi a\u00E7\u0131klayan bir e-postay\u0131 <a href="mailto:support@philongo.com">support@philongo.com</a> adresine g\u00F6nderin.',
+        fq4_q:'<span>iOS beta var m\u0131?</span>',
+        fq4_a:'iOS s\u00FCr\u00FCm\u00FC \u015Fu anda App Store\'da inceleme a\u015Famas\u0131nda. Yak\u0131nda kullan\u0131labilir olacak.',
+        f_home:'Ana Sayfa',
+        f_privacy:'Gizlilik Politikas\u0131',
+        f_terms:'Kullan\u0131m Ko\u015Fullar\u0131',
+        f_contact:'\u0130leti\u015Fim'
+      }
+    };
+    function setLang(l){
+      document.querySelectorAll('.lang-toggle button').forEach(b=>b.classList.toggle('active',b.textContent===l.toUpperCase()));
+      document.querySelectorAll('[data-i18n]').forEach(el=>{const k=el.getAttribute('data-i18n');if(T[l]?.[k])el.innerHTML=T[l][k];});
+      document.documentElement.lang=l;
+    }
+  </script>
+</body>
+</html>
