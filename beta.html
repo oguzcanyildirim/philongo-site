@@ -279,7 +279,7 @@
       document.querySelectorAll('[data-i18n]').forEach(el=>{const k=el.getAttribute('data-i18n');if(T[l]?.[k])el.innerHTML=T[l][k];});
       document.documentElement.lang=l;
     }
-    (function(){const s=localStorage.getItem('lang');if(s&&s!=='en')setLang(s);})()
+    (function(){const u=new URLSearchParams(location.search).get('lang');const s=u||localStorage.getItem('lang');if(s&&s!=='en')setLang(s);})()
   </script>
 </body>
 </html>
